@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 255 255 255;
+  --fg: 17 24 39;
+}
+
+.dark {
+  --bg: 3 6 23;
+  --fg: 226 232 240;
+}
+
+html,
+body,
+:root {
+  height: 100%;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--fg));
+}
+
+.container-base {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.card {
+  @apply rounded-xl border border-black/5 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5;
+}
+
+.gradient-hero {
+  background-image: radial-gradient(closest-side, rgba(59,130,246,0.25), transparent),
+    radial-gradient(closest-side, rgba(236,72,153,0.2), transparent),
+    radial-gradient(closest-side, rgba(34,197,94,0.2), transparent);
+  background-position: -20% -20%, 120% -40%, 50% 120%;
+  background-size: 60% 60%, 60% 60%, 80% 80%;
+}
+
+.prose-custom {
+  @apply prose prose-neutral dark:prose-invert max-w-none prose-pre:bg-slate-900 prose-pre:text-slate-100;
+}
+
