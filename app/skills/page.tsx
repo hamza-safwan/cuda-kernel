@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
 import { Container } from "@/components/Container";
+import { SkillsDeck, type DeckCategory } from "@/components/SkillsDeck";
 
 type Skill = { name: string; level: 1 | 2 | 3 | 4 | 5 };
-const skills: Record<string, Skill[]> = {
-  "Frontend": [
+
+const skillData: Record<string, Skill[]> = {
+  Frontend: [
     { name: "React", level: 5 },
     { name: "Next.js", level: 5 },
     { name: "TypeScript", level: 5 },
@@ -12,7 +13,7 @@ const skills: Record<string, Skill[]> = {
     { name: "Zustand", level: 4 },
     { name: "TanStack Query", level: 4 },
   ],
-  "Backend": [
+  Backend: [
     { name: "Node.js", level: 5 },
     { name: "Express", level: 4 },
     { name: "tRPC", level: 4 },
@@ -43,60 +44,50 @@ const skills: Record<string, Skill[]> = {
   ],
 };
 
-const tabs = [
-  "Frontend",
-  "Backend",
-  "Machine Learning",
-  "Generative AI",
-  "Cloud & DevOps",
-] as const;
+const deck: DeckCategory[] = [
+  {
+    key: "genai",
+    title: "Generative AI",
+    description: "LLM apps, RAG, agents, prompt engineering, and evaluation.",
+    color: "violet",
+    skills: skillData["Generative AI"],
+  },
+  {
+    key: "ml",
+    title: "Machine Learning",
+    description: "Classical ML, model training, data tooling, and visualization.",
+    color: "indigo",
+    skills: skillData["Machine Learning"],
+  },
+  {
+    key: "frontend",
+    title: "Frontend",
+    description: "Accessible, performant UIs with React, Next.js, and TypeScript.",
+    color: "blue",
+    skills: skillData["Frontend"],
+  },
+  {
+    key: "backend",
+    title: "Backend",
+    description: "Robust APIs, validation, and data layers with Node/GraphQL.",
+    color: "green",
+    skills: skillData["Backend"],
+  },
+  {
+    key: "cloud",
+    title: "Cloud & DevOps",
+    description: "Serverless, CI/CD, and reliable delivery on modern infra.",
+    color: "pink",
+    skills: skillData["Cloud & DevOps"],
+  },
+];
 
 export default function SkillsPage() {
-  const [active, setActive] = useState<(typeof tabs)[number]>("Frontend");
-
   return (
     <section className="py-12 sm:py-16">
       <Container>
         <h1 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl">Skills</h1>
-        <div className="mb-6 inline-flex items-center gap-1 rounded-2xl border border-black/10 bg-white/40 p-1 backdrop-blur dark:border-white/10 dark:bg-white/10">
-          {tabs.map((t) => {
-            const isActive = active === t;
-            return (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setActive(t)}
-                className={`rounded-xl px-3 py-1.5 text-sm transition ${
-                  isActive
-                    ? "bg-white text-black shadow-sm dark:bg-white/20 dark:text-white"
-                    : "text-black/70 hover:bg-white/60 dark:text-white/70 dark:hover:bg-white/20"
-                }`}
-              >
-                {t}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="card">
-          <h2 className="mb-4 text-lg font-semibold">{active}</h2>
-          <div className="space-y-3">
-            {skills[active].map((s) => (
-              <div key={s.name} className="space-y-1">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium">{s.name}</span>
-                  <span className="text-black/60 dark:text-white/60">{s.level}/5</span>
-                </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-sky-500 via-fuchsia-500 to-emerald-500"
-                    style={{ width: `${(s.level / 5) * 100}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SkillsDeck categories={deck} />
       </Container>
     </section>
   );

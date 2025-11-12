@@ -16,7 +16,7 @@ export function ProjectsFilter() {
   const [active, setActive] = useState<Category | "all">("all");
   return (
     <div className="space-y-6">
-      <div className="inline-flex items-center gap-1 rounded-2xl border border-black/10 bg-white/40 p-1 backdrop-blur dark:border-white/10 dark:bg-white/10">
+      <div className="inline-flex items-center gap-1 overflow-x-auto rounded-2xl border border-black/10 bg-white/40 p-1 backdrop-blur dark:border-white/10 dark:bg-white/10">
         {filters.map((f) => {
           const isActive = active === f.value;
           return (
@@ -39,4 +39,3 @@ export function ProjectsFilter() {
     </div>
   );
 }
-
